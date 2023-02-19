@@ -17,6 +17,9 @@ body {
     font-family: "Share Tech Mono", monospace;
     font-size: 1.5rem;
     text-align: center;
+    background-image: linear-gradient(90deg, #74c69d 30%, #f8961e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
 }
 
 .container {
@@ -25,6 +28,12 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
+}
+
+.pad-tools {
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
 
@@ -46,12 +55,12 @@ body {
 
 .tools-btns {
     padding: 0 5px;
-    width: 5rem;
-    height: 3rem;
-    color: #da627d;
+    width: 80px;
+    height: 48px;
+    color: #74c69d;
     background: transparent;
     border-radius: 3px;
-    border: 1px solid #da627d;
+    border: 1px solid #74c69d;
     font-family: "Roboto Mono", monospace;
 }
 
@@ -62,10 +71,11 @@ body {
 }
 
 .color-box {
-    width: 2.5rem;
-    height: 2.5rem;
+    margin-left: 10px;
+    width: 2.3rem;
+    height: 2.3rem;
     box-sizing: border-box;
-    border: 2px ridge #da627d;
+    border: 2px ridge #74c69d;
 }
 
 .main-color {
@@ -74,8 +84,8 @@ body {
 
 .second-color {
     position: relative;
-    top: -2rem;
-    left: 2rem;
+    top: -1.5rem;
+    left: 1.5rem;
     z-index: -1;
     background-color: white;
 }
@@ -91,8 +101,7 @@ body {
     color: #f8961e;
 }
 
-
-input[type='range'] {
+#grid-slider {
     overflow: hidden;
     width: 130px;
     -webkit-appearance: none;
@@ -100,18 +109,18 @@ input[type='range'] {
     border-radius: 4px;
 }
 
-input[type='range']::-webkit-slider-runnable-track {
+#grid-slider::-webkit-slider-runnable-track {
     height: 4px;
     -webkit-appearance: none;
     color: #f8961e;
 }
 
-input[type='range']::-webkit-slider-thumb {
+#grid-slider::-webkit-slider-thumb {
     width: 10px;
     -webkit-appearance: none;
     height: 20px;
     background: #27333a;
-    box-shadow: -80px 0 0 80px #f8961e;
+    box-shadow: -125px 0 0 125px #f8961e;
 }
 
 .options-container {
@@ -125,11 +134,11 @@ input[type='range']::-webkit-slider-thumb {
 .opt-btns {
     padding: 0 5px;
     width: 30%;
-    height: 3.5rem;
+    height: auto;
     padding: 0.6rem 2rem;
-    border: 1px solid #da627d;
+    border: 1px solid #f8961e;
     border-radius: 3px;
-    color: #da627d;
+    color: #eaac8b;
     background: transparent;
     font-family: "Roboto Mono", monospace;
 }
@@ -140,10 +149,19 @@ input[type='range']::-webkit-slider-thumb {
     flex-shrink: 0;
 }
 
+.btn {
+    cursor: pointer;
+}
+
 .author {
     font-size: 12px;
     font-weight: 300;
     text-align: center;
+}
+
+.author>a {
+    text-decoration: none;
+    color: #74c69d;
 }
 
 @media (min-width:768px) {
@@ -151,16 +169,21 @@ input[type='range']::-webkit-slider-thumb {
         margin-top: 20px;
     }
 
+    .pad-tools {
+        flex-direction: row-reverse;
+        position: relative;
+        left: -60px;
+    }
+
     .tools-container {
-        position: absolute;
-        left: 0;
-        top: 100px;
+        position: relative;
+        left: -50px;
         width: 20%;
+        max-width: 170px;
     }
 
     .pad {
-        margin-left: 3rem;
-        margin-bottom: 3rem;
+        margin-bottom: 2rem;
         width: 440px;
         height: 440px;
     }
@@ -168,5 +191,51 @@ input[type='range']::-webkit-slider-thumb {
     .options-container {
         width: 455px;
         margin-left: 3rem;
+    }
+}
+
+@media (min-width:1024px) {
+    .title {
+        margin-top: 2rem;
+        font-size: 2.5rem;
+    }
+
+    .pad {
+        width: 600px;
+        height: 600px;
+        margin-bottom: 1rem;
+    }
+
+    .slider {
+        font-size: 16px;
+    }
+
+    #grid-slider {
+        width: 250px;
+    }
+
+    .slider-container {
+        font-size: 16px;
+        margin: 0;
+    }
+
+    .tools-btns {
+        font-size: 16px;
+        width: 120px;
+        height: 60px;
+    }
+
+    .options-container {
+        width: 600px;
+    }
+
+    .opt-btns {
+        font-size: 16px;
+        padding: auto 3rem;
+        width: 30%;
+    }
+
+    .author {
+        margin: 0 0 8px;
     }
 }

@@ -20,23 +20,26 @@
     </header>
 
     <main class="container">
-        <section class="pad-container">
-            <div class="pad"></div>
-        </section>
+        <div class="pad-tools">
+            <section class="pad-container">
+                <div class="pad"></div>
+            </section>
 
-        <section class="tools-container">
-            <button id="pen" class="tools-btns">Pen</button>
-            <button id="eraser" class="tools-btns">Eraser</button>
-            <button id="brush" class="tools-btns">Brush</button>
-            <button id="shader" class="tools-btns">Shader</button>
-            <button id="bucket" class="tools-btns">Color Fill</button>
-            <button id="picker" class="tools-btns">Color Picker</button>
-            <button id="rainbow" class="tools-btns">Rainbow</button>
-            <div class="color-box-wrapper">
-                <div id="main-color" class="color-box main-color"></div>
-                <div id="second-color" class="color-box second-color"></div>
-            </div>
-        </section>
+            <section class="tools-container">
+                <button id="pen" class="tools-btns btn">Pen</button>
+                <button id="eraser" class="tools-btns btn">Eraser</button>
+                <button id="brush" class="tools-btns btn">Brush</button>
+                <button id="shader" class="tools-btns btn">Shader</button>
+                <button id="bucket" class="tools-btns btn">Color Fill</button>
+                <button id="picker" class="tools-btns btn">Color Picker</button>
+                <button id="rainbow" class="tools-btns btn">Rainbow</button>
+                <div class="color-box-wrapper">
+                    <div id="main-color" class="color-box main-color"></div>
+                    <div id="second-color" class="color-box second-color"></div>
+                </div>
+            </section>
+        </div>
+
 
         <section class="slider-container">
             <input type="range" id="grid-slider" class="slider" min="4" max="64" step="2">
@@ -46,14 +49,15 @@
 
 
         <section class="options-container">
-            <button id="toggle-grid" class="opt-btns">Toggle Grid</button>
-            <button id="clear" class="opt-btns">Clear</button>
-            <button id="download" class="opt-btns">Download</button>
+            <button id="toggle-grid" class="opt-btns btn">Toggle Grid</button>
+            <button id="clear" class="opt-btns btn">Clear</button>
+            <button id="download" class="opt-btns btn">Download</button>
         </section>
     </main>
 
     <footer class="footer-wrapper">
-        <p class="author">Page created by antikun @<span><a href="">The Odin Project</a></span> 2023</p>
+        <p class="author">Page created by antikun <a href="https://www.theodinproject.com/">@The Odin Project</a> 2023
+        </p>
     </footer>
 
     <script src="./script.js"></script>
