@@ -7,6 +7,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Etch-a-Sketch</title>
     <link rel="stylesheet" href="./style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
@@ -15,27 +19,33 @@
     </header>
 
     <main class="container">
-        <div class="tools-container">
+        <section class="pad-container">
+            <div class="pad"></div>
+        </section>
+
+        <section class="tools-container">
             <button id="pen" class="tools-btns">Pen</button>
             <button id="eraser" class="tools-btns">Eraser</button>
+            <button id="brush" class="tools-btns">Brush</button>
             <button id="shader" class="tools-btns">Shader</button>
-            <button id="rainbow" class="tools-btns">Rainbow</button>
             <button id="bucket" class="tools-btns">Color Fill</button>
             <button id="picker" class="tools-btns">Color Picker</button>
-            <div id="main-color">Black</div>
-            <div id="second-color">White</div>
-        </div>
+            <button id="rainbow" class="tools-btns">Rainbow</button>
+            <div class="color-box-wrapper">
+                <div id="main-color" class="color-box main-color"></div>
+                <div id="second-color" class="color-box second-color"></div>
+            </div>
+        </section>
 
-        <div class="pad-container"></div>
 
-        <div class="options-container">
+        <section class="options-container">
             <button id="toggle-grid" class="opt-btns">Toggle Grid</button>
             <button id="clear" class="opt-btns">Clear</button>
             <button id="download" class="opt-btns">Download picture</button>
-        </div>
+        </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer-wrapper">
         <p class="author">Page created by antikun @<span><a href="">The Odin Project</a></span> 2023</p>
     </footer>
 

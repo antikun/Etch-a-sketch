@@ -5,60 +5,96 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    align-items: center;
     height: 100vh;
+    background-color: #10002b;
+    color: #d2d7df;
+    font-family: "Roboto Mono", monospace;
 }
 
 .title {
+    font-size: 1.5rem;
     text-align: center;
 }
 
 .container {
+    margin: 0;
+    padding: 0;
     display: flex;
-    justify-content: space-between;
-    margin: 2.5rem;
+    flex-direction: column;
+    align-items: center;
+}
+
+.pad {
+    margin-bottom: 0.8rem;
+    width: 340px;
+    height: 340px;
+    background-color: white;
+    border: 5px solid #62728a;
 }
 
 .tools-container {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    width: 10%;
-    height: 70vh;
-    padding: 1rem 1.5rem;
+    justify-content: space-around;
     gap: 0.8rem;
-    outline: 1px solid black
 }
 
 .tools-btns {
-    width: 80px;
-    height: 80px;
+    padding: 0 5px;
+    width: 5rem;
+    height: 4rem;
+    color: #3d9079;
+    background: transparent;
+    border-radius: 3px;
+    border: 1px solid #3d9079;
 }
 
-.pad-container {
+.color-box-wrapper {
+    width: 5rem;
+    height: 5rem;
+    box-sizing: border-box;
+}
+
+.color-box {
+    width: 3rem;
+    height: 3rem;
+    box-sizing: border-box;
+    border: 2px ridge #3d9079;
+}
+
+.main-color {
+    background-color: black;
+}
+
+.second-color {
     position: relative;
-    left: 4%;
-    width: 45rem;
-    height: 45rem;
-    outline: 1px solid black;
+    top: -2rem;
+    left: 2rem;
+    z-index: -1;
+    background-color: white;
 }
 
 .options-container {
+    margin: 0.8rem 0;
     display: flex;
-    flex-direction: column;
-    width: 20%;
-    height: 70vh;
-    justify-content: flex-start;
-    align-items: center;
+    justify-content: space-around;
     gap: 0.8rem;
-    outline: 1px solid black;
 }
 
 .opt-btns {
-    width: 75%;
+    padding: 0 5px;
+    width: 30%;
     height: 3.5rem;
     padding: 0.6rem 1.75rem;
+    border: 1px solid #3d9079;
+    border-radius: 3px;
+    color: #3d9079;
+    background: transparent;
 }
 
 .author {
+    font-size: 12px;
+    font-weight: 300;
     text-align: center;
 }
