@@ -7,12 +7,14 @@ body {
     justify-content: space-between;
     align-items: center;
     height: 100vh;
-    background-color: #10002b;
-    color: #d2d7df;
+    background-color: #0f1417;
+    color: #f4d1d9;
     font-family: "Roboto Mono", monospace;
 }
 
 .title {
+    margin: 10px;
+    font-family: "Share Tech Mono", monospace;
     font-size: 1.5rem;
     text-align: center;
 }
@@ -22,6 +24,7 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -30,37 +33,39 @@ body {
     width: 340px;
     height: 340px;
     background-color: white;
-    border: 5px solid #62728a;
+    border: 5px solid #6d597a;
 }
 
 .tools-container {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+    max-width: 402px;
     gap: 0.8rem;
 }
 
 .tools-btns {
     padding: 0 5px;
     width: 5rem;
-    height: 4rem;
-    color: #3d9079;
+    height: 3rem;
+    color: #da627d;
     background: transparent;
     border-radius: 3px;
-    border: 1px solid #3d9079;
+    border: 1px solid #da627d;
+    font-family: "Roboto Mono", monospace;
 }
 
 .color-box-wrapper {
     width: 5rem;
-    height: 5rem;
+    height: 3rem;
     box-sizing: border-box;
 }
 
 .color-box {
-    width: 3rem;
-    height: 3rem;
+    width: 2.5rem;
+    height: 2.5rem;
     box-sizing: border-box;
-    border: 2px ridge #3d9079;
+    border: 2px ridge #da627d;
 }
 
 .main-color {
@@ -75,10 +80,45 @@ body {
     background-color: white;
 }
 
-.options-container {
+.slider-container {
     margin: 0.8rem 0;
+}
+
+.slider {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 14px;
+    color: #f8961e;
+}
+
+
+input[type='range'] {
+    overflow: hidden;
+    width: 130px;
+    -webkit-appearance: none;
+    background-color: #e7ecef;
+    border-radius: 4px;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+    height: 4px;
+    -webkit-appearance: none;
+    color: #f8961e;
+}
+
+input[type='range']::-webkit-slider-thumb {
+    width: 10px;
+    -webkit-appearance: none;
+    height: 20px;
+    background: #27333a;
+    box-shadow: -80px 0 0 80px #f8961e;
+}
+
+.options-container {
+    margin-bottom: 0.8rem;
     display: flex;
     justify-content: space-around;
+    flex-wrap: wrap;
     gap: 0.8rem;
 }
 
@@ -86,15 +126,47 @@ body {
     padding: 0 5px;
     width: 30%;
     height: 3.5rem;
-    padding: 0.6rem 1.75rem;
-    border: 1px solid #3d9079;
+    padding: 0.6rem 2rem;
+    border: 1px solid #da627d;
     border-radius: 3px;
-    color: #3d9079;
+    color: #da627d;
     background: transparent;
+    font-family: "Roboto Mono", monospace;
+}
+
+#download {
+    color: #4e1f01;
+    background-image: linear-gradient(120deg, #e85d04, #f8961e, #eaac8b);
+    flex-shrink: 0;
 }
 
 .author {
     font-size: 12px;
     font-weight: 300;
     text-align: center;
+}
+
+@media (min-width:768px) {
+    .title {
+        margin-top: 20px;
+    }
+
+    .tools-container {
+        position: absolute;
+        left: 0;
+        top: 100px;
+        width: 20%;
+    }
+
+    .pad {
+        margin-left: 3rem;
+        margin-bottom: 3rem;
+        width: 440px;
+        height: 440px;
+    }
+
+    .options-container {
+        width: 455px;
+        margin-left: 3rem;
+    }
 }
