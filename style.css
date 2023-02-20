@@ -43,6 +43,13 @@ body {
     height: 340px;
     background-color: white;
     border: 5px solid #6d597a;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.pad.square {
+    border: 1px solid black;
+    background-color: red;
 }
 
 .tools-container {
@@ -58,10 +65,7 @@ body {
     width: 80px;
     height: 48px;
     color: #74c69d;
-    background: transparent;
-    border-radius: 3px;
     border: 1px solid #74c69d;
-    font-family: "Roboto Mono", monospace;
 }
 
 .color-box-wrapper {
@@ -137,10 +141,7 @@ body {
     height: auto;
     padding: 0.6rem 2rem;
     border: 1px solid #f8961e;
-    border-radius: 3px;
     color: #eaac8b;
-    background: transparent;
-    font-family: "Roboto Mono", monospace;
 }
 
 #download {
@@ -149,9 +150,34 @@ body {
     flex-shrink: 0;
 }
 
+/* RIPPLE */
+
 .btn {
     cursor: pointer;
+    position: relative;
+    overflow: hidden;
+    background: transparent;
+    font-family: "Roboto Mono", monospace;
+    border-radius: 3px;
+    transition: background-color 400ms;
 }
+
+span.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 600ms linear;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* RIPPLE END */
 
 .author {
     font-size: 12px;
