@@ -34,17 +34,17 @@
                 <button id="picker" class="tools-btns btn">Color Picker</button>
                 <button id="rainbow" class="tools-btns btn">Rainbow</button>
                 <div class="color-box-wrapper">
-                    <div id="main-color" class="color-box main-color"></div>
-                    <div id="second-color" class="color-box second-color"></div>
+                    <input type="color" value="#000000" id="main-color" class="color-box main-color">
+                    <input type="color" value="#ffffff" id="second-color" class="color-box second-color">
                 </div>
             </section>
         </div>
 
 
         <section class="slider-container">
-            <input type="range" id="grid-slider" class="slider" min="4" max="64" step="2">
-            <p class="slider">Grid density: <output class="slider-value">4</output> by <output
-                    class="slider-value">4</output></p>
+            <input type="range" id="grid-slider" class="slider" value="30" min="2" max="40" step="2">
+            <p class="slider">Grid density: <span class="slider-value">4</span> by <span class="slider-value">4</span>
+            </p>
         </section>
 
 

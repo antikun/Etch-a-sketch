@@ -47,9 +47,8 @@ body {
     flex-wrap: wrap;
 }
 
-.pad.square {
-    border: 1px solid black;
-    background-color: red;
+.pad>.grid-cell {
+    outline: 1px solid #baadc3;
 }
 
 .tools-container {
@@ -75,11 +74,19 @@ body {
 }
 
 .color-box {
+    position: relative;
+    appearance: none;
     margin-left: 10px;
     width: 2.3rem;
     height: 2.3rem;
     box-sizing: border-box;
     border: 2px ridge #74c69d;
+    cursor: pointer;
+}
+
+.color-box::-webkit-color-swatch {
+    box-sizing: border-box;
+    border: none;
 }
 
 .main-color {

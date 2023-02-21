@@ -23,14 +23,32 @@ buttons.forEach(button => {
 
 
 const pen = document.querySelector("#pen");
-const pad = document.querySelector(".pad")
+const slider = document.querySelector("#grid-slider");
 
 function makeDivs(num) {
+    const pad = document.querySelector(".pad")
+    while (pad.firstChild) {
+        pad.removeChild(pad.firstChild);
+    }
+
+    const outputValue = document.querySelectorAll(".slider-value");
+    outputValue.forEach(output => output.textContent = num);
+
     const gridNum = num ** 2;
     for (let i = 0; i < gridNum; i++) {
         const div = document.createElement("div");
-        div.style.width = div.style.height = `${(pad.offsetWidth / num)}px`;
-        div.classList.add("square")
+        div.style.width = div.style.height = `${((pad.clientWidth) / num)}px`;
+        div.classList.add("grid-cell")
         pad.append(div);
+        div.addEventListener("mousedown", () => {
+            div.style.backgroundColor = black;
+        })
     }
+
 }
+
+makeDivs(slider.value);
+
+slider.addEventListener("input", () => {
+    makeDivs(slider.value);
+});
