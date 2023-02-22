@@ -48,7 +48,8 @@ body {
 }
 
 .pad>.grid-cell {
-    outline: 1px solid #baadc3;
+    box-sizing: border-box;
+    border: 1px solid #baadc3;
 }
 
 .tools-container {
@@ -65,6 +66,11 @@ body {
     height: 48px;
     color: #74c69d;
     border: 1px solid #74c69d;
+}
+
+.selected {
+    color: #0f1417;
+    background: #74c69d !important;
 }
 
 .color-box-wrapper {
@@ -90,14 +96,15 @@ body {
 }
 
 .main-color {
+    position: relative;
+    top: -2.3rem;
     background-color: black;
 }
 
 .second-color {
     position: relative;
-    top: -1.5rem;
+    top: 1.5rem;
     left: 1.5rem;
-    z-index: -1;
     background-color: white;
 }
 
