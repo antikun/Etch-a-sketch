@@ -46,12 +46,10 @@ function makeDivs(num) {
 makeDivs(slider.value);
 
 window.addEventListener("resize", () => {
-    let divWidth = `${pad.clientWidth / slider.value}px`;
-    const padWidth = pad.clientWidth;
-    const temp = padWidth;
-    console.log(divWidth)
-    console.log(padWidth)
-    // pad.childNodes.forEach(div => { div.width = div.height = divWidth });
+    pad.childNodes.forEach(div => {
+        const newDivWidth = `${pad.clientWidth / slider.value}px`;
+        div.style.width = div.style.height = newDivWidth;
+    });
 });
 
 slider.addEventListener("input", () => {
@@ -60,7 +58,6 @@ slider.addEventListener("input", () => {
 
 pad.onmousedown = function (e) {
     e.preventDefault();
-    console.log(e.target)
     const mainColor = document.querySelector("#main-color");
     const draw = (e) => {
         e.preventDefault();
