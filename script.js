@@ -22,9 +22,13 @@ buttons.forEach(button => {
 });
 
 
+
+const mainColor = document.querySelector("#main-color");
 const pen = document.querySelector("#pen");
 const slider = document.querySelector("#grid-slider");
 const pad = document.querySelector(".pad");
+const eraser = document.querySelector("#eraser");
+const bgColorBtn = document.querySelector("#bg-color-btn");
 
 function makeDivs(num) {
     while (pad.firstChild) {
@@ -38,7 +42,7 @@ function makeDivs(num) {
     for (let i = 0; i < gridNum; i++) {
         const div = document.createElement("div");
         div.style.width = div.style.height = `${((pad.clientWidth) / num)}px`;
-        div.classList.add("grid-cell");
+        div.classList.add("grid-cell", "cell-border");
         pad.append(div);
     }
 }
@@ -56,20 +60,26 @@ slider.addEventListener("input", () => {
     makeDivs(slider.value);
 });
 
-pad.onmousedown = function (e) {
-    e.preventDefault();
-    const mainColor = document.querySelector("#main-color");
-    const draw = (e) => {
-        e.preventDefault();
-        if (pad.contains(e.target) && e.target != pad) {
+const draw = (e) => {
+    if (pad.contains(e.target) && e.target != pad) {
+        if (pen.classList.contains("selected")) {
             e.target.style.backgroundColor = mainColor.value;
+        } else if (eraser.classList.contains("selected")) {
+            e.target.style.backgroundColor = "transparent";
+        } else if (bgColorBtn.classList.contains("selected")) {
+            pad.style.backgroundColor = mainColor.value;
         }
     }
+};
+
+
+
+pad.onmousedown = function (e) {
     draw(e);
 
-    pad.addEventListener("mousemove", draw);
+    document.addEventListener("mousemove", draw);
     document.addEventListener("mouseup", () => {
-        pad.removeEventListener("mousemove", draw);
+        document.removeEventListener("mousemove", draw);
     });
 }
 
@@ -81,4 +91,20 @@ toolsBtns.forEach(button => {
         }
         button.classList.add("selected");
     });
+})
+
+function toggleGrid() {
+    pad.childNodes.forEach(div => {
+        div.classList.toggle("cell-border");
+    })
+}
+
+const gridBtn = document.querySelector("#toggle-grid");
+gridBtn.addEventListener("click", toggleGrid);
+
+const clearBtn = document.querySelector("#clear");
+clearBtn.addEventListener("click", () => {
+    pad.childNodes.forEach(div => {
+        div.style.backgroundColor = "";
+    })
 })
