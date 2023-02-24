@@ -29,6 +29,8 @@ const slider = document.querySelector("#grid-slider");
 const pad = document.querySelector(".pad");
 const eraser = document.querySelector("#eraser");
 const bgColorBtn = document.querySelector("#bg-color-btn");
+const rainbowBtn = document.querySelector("#rainbow");
+const shaderBtn = document.querySelector("#shader");
 
 function makeDivs(num) {
     while (pad.firstChild) {
@@ -60,6 +62,26 @@ slider.addEventListener("input", () => {
     makeDivs(slider.value);
 });
 
+
+let clicks = 0;
+let count = 0;
+
+function getRainbowColor() {
+    const rainbowColors = ["red", "orange", "yellow", "green", "blue", "indigo"];
+    if (clicks > rainbowColors.length) {
+        clicks = 1
+    }
+    return rainbowColors[clicks - 1]
+}
+
+function makeShades() {
+    if (count === 10) { return 1 }
+    if (count > 10) {
+        count = 1;
+    }
+    return parseFloat(`0.${count}`);
+}
+
 const draw = (e) => {
     if (pad.contains(e.target) && e.target != pad) {
         if (pen.classList.contains("selected")) {
@@ -68,20 +90,23 @@ const draw = (e) => {
             e.target.style.backgroundColor = "transparent";
         } else if (bgColorBtn.classList.contains("selected")) {
             pad.style.backgroundColor = mainColor.value;
+        } else if (rainbowBtn.classList.contains("selected")) {
+            clicks++;
+            e.target.style.backgroundColor = getRainbowColor();
+        } else if (shaderBtn.classList.contains("selected")) {
+            count++;
+            e.target.style.backgroundColor = `rgba(0, 0, 0, ${makeShades()}`
         }
     }
 };
 
-
-
-pad.onmousedown = function (e) {
+pad.addEventListener("mousedown", (e) => {
     draw(e);
-
-    document.addEventListener("mousemove", draw);
+    document.addEventListener("mouseover", draw);
     document.addEventListener("mouseup", () => {
-        document.removeEventListener("mousemove", draw);
+        document.removeEventListener("mouseover", draw);
     });
-}
+})
 
 const toolsBtns = document.querySelectorAll(".tools-btns");
 toolsBtns.forEach(button => {
