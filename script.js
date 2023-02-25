@@ -21,7 +21,7 @@ buttons.forEach(button => {
     button.addEventListener("click", makeRipple)
 });
 
-
+// GLOBAL VARIABLES
 
 const mainColor = document.querySelector("#main-color");
 const pen = document.querySelector("#pen");
@@ -31,6 +31,10 @@ const eraser = document.querySelector("#eraser");
 const bgColorBtn = document.querySelector("#bg-color-btn");
 const rainbowBtn = document.querySelector("#rainbow");
 const shaderBtn = document.querySelector("#shader");
+const ligthenerBtn = document.querySelector("#lightener");
+const fillBtn = document.querySelector("#bucket");
+
+// SETTING THE GRID FUNCTIONS
 
 function makeDivs(num) {
     while (pad.firstChild) {
@@ -49,9 +53,9 @@ function makeDivs(num) {
     }
 }
 
-makeDivs(slider.value);
+makeDivs(slider.value); // sets initial grid
 
-window.addEventListener("resize", () => {
+window.addEventListener("resize", () => { // makes the grid responsive
     pad.childNodes.forEach(div => {
         const newDivWidth = `${pad.clientWidth / slider.value}px`;
         div.style.width = div.style.height = newDivWidth;
@@ -62,27 +66,52 @@ slider.addEventListener("input", () => {
     makeDivs(slider.value);
 });
 
+// COLORING FUNCTIONS
 
-let clicks = 0;
-let count = 0;
+// let clicks = 0;
 
-function getRainbowColor() {
-    const rainbowColors = ["red", "orange", "yellow", "green", "blue", "indigo"];
-    if (clicks > rainbowColors.length) {
-        clicks = 1
+// function getRainbowColor() {
+//     const rainbowColors = ["red", "orange", "yellow", "green", "blue", "indigo"];
+//     if (clicks > rainbowColors.length) {
+//         clicks = 1
+//     }
+//     return rainbowColors[clicks - 1]
+// }
+
+function makeRandomColor() {
+    const getRandomNum = () => {
+        return Math.floor(Math.random() * 255) + 1;
     }
-    return rainbowColors[clicks - 1]
+
+    return `rgb(${getRandomNum()}, ${getRandomNum()}, ${getRandomNum()})`;
 }
 
-function makeShades() {
-    if (count === 10) { return 1 }
-    if (count > 10) {
-        count = 1;
+function applyShader(color) {
+    const oldRGB = color.slice(4, -1).split(",");
+
+    const newR = parseInt(parseInt(oldRGB[0]) * (1 - 0.1));
+    const newG = parseInt(parseInt(oldRGB[1]) * (1 - 0.1));
+    const newB = parseInt(parseInt(oldRGB[2]) * (1 - 0.1));
+
+    return `rgb(${newR}, ${newG}, ${newB})`;
+}
+
+function applyLightener(color) {
+    const oldRGB = color.slice(4, -1).split(",");
+
+    const calculateNewValue = (oldValue) => {
+        return oldValue + (255 - oldValue) * 0.1
     }
-    return parseFloat(`0.${count}`);
+
+    const newR = calculateNewValue(parseInt(oldRGB[0]))
+    const newG = calculateNewValue(parseInt(oldRGB[1]))
+    const newB = calculateNewValue(parseInt(oldRGB[2]))
+
+    return `rgb(${newR}, ${newG}, ${newB})`;
 }
 
 const draw = (e) => {
+    e.preventDefault();
     if (pad.contains(e.target) && e.target != pad) {
         if (pen.classList.contains("selected")) {
             e.target.style.backgroundColor = mainColor.value;
@@ -91,16 +120,25 @@ const draw = (e) => {
         } else if (bgColorBtn.classList.contains("selected")) {
             pad.style.backgroundColor = mainColor.value;
         } else if (rainbowBtn.classList.contains("selected")) {
-            clicks++;
-            e.target.style.backgroundColor = getRainbowColor();
+            // clicks++;
+            e.target.style.backgroundColor = makeRandomColor();
         } else if (shaderBtn.classList.contains("selected")) {
-            count++;
-            e.target.style.backgroundColor = `rgba(0, 0, 0, ${makeShades()}`
+            const currentColor = e.target.style.backgroundColor;
+            e.target.style.backgroundColor = applyShader(currentColor);
+        } else if (ligthenerBtn.classList.contains("selected")) {
+            const currentColor = e.target.style.backgroundColor;
+            e.target.style.backgroundColor = applyLightener(currentColor);
         }
+        // else if (fillBtn.classList.contains("selected")) {
+
+        // }
     }
 };
 
+// EVENT LISTENERS
+
 pad.addEventListener("mousedown", (e) => {
+    e.preventDefault();
     draw(e);
     document.addEventListener("mouseover", draw);
     document.addEventListener("mouseup", () => {
@@ -118,6 +156,8 @@ toolsBtns.forEach(button => {
     });
 })
 
+// GOLD BUTTONS
+
 function toggleGrid() {
     pad.childNodes.forEach(div => {
         div.classList.toggle("cell-border");
@@ -133,3 +173,5 @@ clearBtn.addEventListener("click", () => {
         div.style.backgroundColor = "";
     })
 })
+
+
