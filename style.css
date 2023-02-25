@@ -255,6 +255,10 @@ span.ripple {
         height: 60px;
     }
 
+    .color-box {
+        width: 120px;
+    }
+
     .options-container {
         width: 600px;
     }
