@@ -1,3 +1,5 @@
+// I got the makeRipple function from https://css-tricks.com/how-to-recreate-the-ripple-effect-of-material-design-buttons/ 
+
 function makeRipple(e) {
     const button = e.currentTarget;
     const circle = document.createElement("span");

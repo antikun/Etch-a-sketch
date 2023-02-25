@@ -187,11 +187,16 @@ span.ripple {
     font-size: 12px;
     font-weight: 300;
     text-align: center;
+    display: inline-block;
 }
 
 .author>a {
     text-decoration: none;
     color: #74c69d;
+}
+
+.other-projects {
+    display: none;
 }
 
 @media (min-width:768px) {
@@ -271,5 +276,15 @@ span.ripple {
 
     .author {
         margin: 0 0 8px;
+    }
+
+    .footer-wrapper {
+        display: flex;
+        justify-content: space-between;
+        gap: 90px;
+    }
+
+    .other-projects {
+        display: inline-block;
     }
 }
