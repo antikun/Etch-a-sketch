@@ -16,7 +16,7 @@ function makeRipple(e) {
     button.appendChild(circle);
 }
 
-const buttons = document.querySelectorAll(".btn");
+const buttons = document.querySelectorAll(".opt-btns");
 buttons.forEach(button => {
     button.addEventListener("click", makeRipple)
 });
@@ -150,12 +150,15 @@ const toolsBtns = document.querySelectorAll(".tools-btns");
 toolsBtns.forEach(button => {
     button.addEventListener("click", () => {
         for (let btn of toolsBtns) {
-            btn.classList.remove("selected")
+            btn.classList.remove("selected", "rainbow")
         }
         button.classList.add("selected");
     });
 })
 
+rainbowBtn.addEventListener("click", () => {
+    rainbowBtn.classList.add("rainbow");
+})
 // GOLD BUTTONS
 
 function toggleGrid() {
@@ -172,6 +175,12 @@ clearBtn.addEventListener("click", () => {
     pad.childNodes.forEach(div => {
         div.style.backgroundColor = "";
     })
+});
+
+// COLOR SWATCH BACKGROUND
+
+mainColor.addEventListener("input", () => {
+    mainColor.style.backgroundColor = mainColor.value;
 })
 
 
