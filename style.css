@@ -113,13 +113,13 @@ body {
 }
 
 #grid-slider::-webkit-slider-runnable-track {
-    height: 4px;
+    height: 8px;
     -webkit-appearance: none;
     color: #f8961e;
 }
 
 #grid-slider::-webkit-slider-thumb {
-    width: 10px;
+    width: 15px;
     -webkit-appearance: none;
     height: 20px;
     background: #27333a;

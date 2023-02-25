@@ -70,23 +70,23 @@ slider.addEventListener("input", () => {
 
 // COLORING FUNCTIONS
 
-// let clicks = 0;
+let clicks = 0;
 
-// function getRainbowColor() {
-//     const rainbowColors = ["red", "orange", "yellow", "green", "blue", "indigo"];
-//     if (clicks > rainbowColors.length) {
-//         clicks = 1
-//     }
-//     return rainbowColors[clicks - 1]
-// }
-
-function makeRandomColor() {
-    const getRandomNum = () => {
-        return Math.floor(Math.random() * 255) + 1;
+function getRainbowColor() {
+    const rainbowColors = ["red", "orange", "yellow", "green", "blue", "indigo"];
+    if (clicks > rainbowColors.length) {
+        clicks = 1
     }
-
-    return `rgb(${getRandomNum()}, ${getRandomNum()}, ${getRandomNum()})`;
+    return rainbowColors[clicks - 1]
 }
+
+// function makeRandomColor() {
+//     const getRandomNum = () => {
+//         return Math.floor(Math.random() * 255) + 1;
+//     }
+
+//     return `rgb(${getRandomNum()}, ${getRandomNum()}, ${getRandomNum()})`;
+// }
 
 function applyShader(color) {
     const oldRGB = color.slice(4, -1).split(",");
@@ -122,8 +122,8 @@ const draw = (e) => {
         } else if (bgColorBtn.classList.contains("selected")) {
             pad.style.backgroundColor = mainColor.value;
         } else if (rainbowBtn.classList.contains("selected")) {
-            // clicks++;
-            e.target.style.backgroundColor = makeRandomColor();
+            clicks++;
+            e.target.style.backgroundColor = getRainbowColor();
         } else if (shaderBtn.classList.contains("selected")) {
             const currentColor = e.target.style.backgroundColor;
             e.target.style.backgroundColor = applyShader(currentColor);
@@ -139,14 +139,28 @@ const draw = (e) => {
 
 // EVENT LISTENERS
 
-pad.addEventListener("mousedown", (e) => {
-    e.preventDefault();
-    draw(e);
-    document.addEventListener("mouseover", draw);
-    document.addEventListener("mouseup", () => {
-        document.removeEventListener("mouseover", draw);
-    });
-})
+if (("ontouchstart" in window) || // for touch devices
+    (navigator.maxTouchPoints > 0) ||
+    (navigator.msMaxTouchPoints > 0)) {
+    pad.addEventListener("touchstart", (e) => {
+        e.preventDefault();
+        draw(e);
+        document.addEventListener("touchmove", draw);
+        document.addEventListener("touchend", () => {
+            document.removeEventListener("touchmove", draw);
+        });
+    })
+} else {
+    pad.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+        draw(e);
+        document.addEventListener("mouseover", draw);
+        document.addEventListener("mouseup", () => {
+            document.removeEventListener("mouseover", draw);
+        });
+    })
+}
+
 
 const toolsBtns = document.querySelectorAll(".tools-btns");
 toolsBtns.forEach(button => {
