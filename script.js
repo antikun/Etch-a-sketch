@@ -35,6 +35,7 @@ const rainbowBtn = document.querySelector("#rainbow");
 const shaderBtn = document.querySelector("#shader");
 const ligthenerBtn = document.querySelector("#lightener");
 const fillBtn = document.querySelector("#bucket");
+const grabberBtn = document.querySelector("#grabber");
 
 // SETTING THE GRID FUNCTIONS
 
@@ -112,6 +113,38 @@ function applyLightener(color) {
     return `rgb(${newR}, ${newG}, ${newB})`;
 }
 
+function convertRGBtoHEX(input) {
+    const rgbValues = input.slice(4, -1).split(",");
+    const hexValues = [];
+
+    const replaceNums = (num, arr) => {
+        if (num === 10) {
+            arr.push("a")
+        } else if (num === 11) {
+            arr.push("b")
+        } else if (num === 12) {
+            arr.push("c")
+        } else if (num === 13) {
+            arr.push("d")
+        } else if (num === 14) {
+            arr.push("e")
+        } else if (num === 15) {
+            arr.push("f")
+        } else {
+            arr.push(num);
+        }
+    }
+
+    rgbValues.forEach(value => {
+        const firstChar = Math.floor(value / 16);
+        const secondChar = ((value / 16 - firstChar) * 16) * 1000 / 1000;
+        replaceNums(firstChar, hexValues);
+        replaceNums(secondChar, hexValues);
+    });
+
+    return `#${hexValues.join("")}`;
+}
+
 const draw = (e) => {
     e.preventDefault();
     if (pad.contains(e.target) && e.target != pad) {
@@ -130,6 +163,10 @@ const draw = (e) => {
         } else if (ligthenerBtn.classList.contains("selected")) {
             const currentColor = e.target.style.backgroundColor;
             e.target.style.backgroundColor = applyLightener(currentColor);
+        } else if (grabberBtn.classList.contains("selected")) {
+            const targetColor = convertRGBtoHEX(e.target.style.backgroundColor)
+            mainColor.value = targetColor;
+            mainColor.style.backgroundColor = targetColor;
         }
         // else if (fillBtn.classList.contains("selected")) {
 
