@@ -64,7 +64,7 @@ window.addEventListener("resize", () => { // makes the grid responsive
     });
 });
 
-slider.addEventListener("input", () => {
+slider.addEventListener("change", () => {
     makeDivs(slider.value);
 });
 
@@ -139,28 +139,14 @@ const draw = (e) => {
 
 // EVENT LISTENERS
 
-if (("ontouchstart" in window) || // for touch devices
-    (navigator.maxTouchPoints > 0) ||
-    (navigator.msMaxTouchPoints > 0)) {
-    pad.addEventListener("touchstart", (e) => {
-        e.preventDefault();
-        draw(e);
-        document.addEventListener("touchmove", draw);
-        document.addEventListener("touchend", () => {
-            document.removeEventListener("touchmove", draw);
-        });
-    })
-} else {
-    pad.addEventListener("mousedown", (e) => {
-        e.preventDefault();
-        draw(e);
-        document.addEventListener("mouseover", draw);
-        document.addEventListener("mouseup", () => {
-            document.removeEventListener("mouseover", draw);
-        });
-    })
-}
-
+pad.addEventListener("mousedown", (e) => {
+    e.preventDefault();
+    draw(e);
+    document.addEventListener("mouseover", draw);
+    document.addEventListener("mouseup", () => {
+        document.removeEventListener("mouseover", draw);
+    });
+})
 
 const toolsBtns = document.querySelectorAll(".tools-btns");
 toolsBtns.forEach(button => {
