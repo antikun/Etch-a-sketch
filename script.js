@@ -42,7 +42,7 @@ const USER_INPUT = {
     color: "",
     targets: [],
     previousColor: []
-}
+};
 
 
 // SETTING THE GRID FUNCTIONS
@@ -215,7 +215,7 @@ pad.addEventListener("mousedown", (e) => {
     document.addEventListener("mouseup", () => {
         document.removeEventListener("mouseover", draw);
     });
-})
+});
 
 const toolsBtns = document.querySelectorAll(".tools-btns");
 toolsBtns.forEach(button => {
@@ -226,11 +226,12 @@ toolsBtns.forEach(button => {
         button.classList.add("selected");
         USER_INPUT.selected = button.textContent;
     });
-})
+});
 
 rainbowBtn.addEventListener("click", () => {
     rainbowBtn.classList.add("rainbow");
-})
+});
+
 // GOLD BUTTONS
 
 function toggleGrid() {
@@ -253,25 +254,4 @@ clearBtn.addEventListener("click", () => {
 
 mainColor.addEventListener("input", () => {
     mainColor.style.backgroundColor = mainColor.value;
-})
-
-
-// const newArr = [];
-// newArr.splice(0, newArr.length);
-    // USER_INPUT.targets.push({...pad.children});
-    // const newObj = [...USER_INPUT.targets];
-    // for(let prop in newObj[0]) {
-    //   newObj[0].prop = newObj[0][prop].style.backgroundColor;
-    // }
-    // USER_INPUT.previousColor.push(newObj)
-    // newArr.forEach(item => {
-    //   for (let i = 0; i < pad.children.length; i++) {
-    //   USER_INPUT.previousColor.push(item[i].style.backgroundColor);
-    // }
-    // });
-  //   USER_INPUT.targets.forEach(target => {
-  //     for (let i = 0; i < pad.children.length; i++) {
-  //       newArr.push(target[i].style.backgroundColor)
-  //     }
-  //   })
-  // USER_INPUT.previousColor.push(newArr);
+});
