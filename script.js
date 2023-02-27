@@ -247,7 +247,9 @@ const clearBtn = document.querySelector("#clear");
 clearBtn.addEventListener("click", () => {
     pad.childNodes.forEach(div => {
         div.style.backgroundColor = "";
-    })
+    });
+    USER_INPUT.targets.splice(0, USER_INPUT.targets.length);
+    USER_INPUT.previousColor.splice(0, USER_INPUT.previousColor.length);
 });
 
 // COLOR SWATCH BACKGROUND
