@@ -37,6 +37,14 @@ const ligthenerBtn = document.querySelector("#lightener");
 const fillBtn = document.querySelector("#bucket");
 const grabberBtn = document.querySelector("#grabber");
 
+const USER_INPUT = {
+    selected: "Pen",
+    color: "",
+    targets: [],
+    previousColor: []
+}
+
+
 // SETTING THE GRID FUNCTIONS
 
 function makeDivs(num) {
@@ -74,7 +82,7 @@ slider.addEventListener("change", () => {
 let clicks = 0;
 
 function getRainbowColor() {
-    const rainbowColors = ["red", "orange", "yellow", "green", "blue", "indigo"];
+    const rainbowColors = ["rgb(255, 0, 0)", "rgb(255,165,0)", "rgb(255,255,0)", "rgb(0, 255, 0)", "rgb(0,0,255)", "rgb(75,0,130)"];
     if (clicks > rainbowColors.length) {
         clicks = 1
     }
@@ -145,39 +153,63 @@ function convertRGBtoHEX(input) {
     return `#${hexValues.join("")}`;
 }
 
+
+function prepareUndo(e) {
+    if (USER_INPUT.targets.length > 100) {
+        USER_INPUT.targets.splice(0, 50)
+    }
+    if (USER_INPUT.previousColor.length > 100) {
+        USER_INPUT.previousColor.splice(0, 50)
+    }
+    USER_INPUT.targets.push(e.target);
+    USER_INPUT.previousColor.push(e.target.style.backgroundColor);
+}
+
 const draw = (e) => {
     e.preventDefault();
+    prepareUndo(e);
     if (pad.contains(e.target) && e.target != pad) {
-        if (pen.classList.contains("selected")) {
+        if (USER_INPUT.selected === "Pen") {
             e.target.style.backgroundColor = mainColor.value;
-        } else if (eraser.classList.contains("selected")) {
+        } else if (USER_INPUT.selected === "Eraser") {
             e.target.style.backgroundColor = "transparent";
-        } else if (bgColorBtn.classList.contains("selected")) {
+        } else if (USER_INPUT.selected === "Background") {
             pad.style.backgroundColor = mainColor.value;
-        } else if (rainbowBtn.classList.contains("selected")) {
+        } else if (USER_INPUT.selected === "Unicorn") {
             clicks++;
             e.target.style.backgroundColor = getRainbowColor();
-        } else if (shaderBtn.classList.contains("selected")) {
+        } else if (USER_INPUT.selected === "Shader") {
             const currentColor = e.target.style.backgroundColor;
             e.target.style.backgroundColor = applyShader(currentColor);
-        } else if (ligthenerBtn.classList.contains("selected")) {
+        } else if (USER_INPUT.selected === "Lightener") {
             const currentColor = e.target.style.backgroundColor;
             e.target.style.backgroundColor = applyLightener(currentColor);
-        } else if (grabberBtn.classList.contains("selected")) {
+        } else if (USER_INPUT.selected === "Color Grab") {
+            if (e.target.style.backgroundColor === "") { return }
             const targetColor = convertRGBtoHEX(e.target.style.backgroundColor)
             mainColor.value = targetColor;
             mainColor.style.backgroundColor = targetColor;
         }
-        // else if (fillBtn.classList.contains("selected")) {
-
-        // }
     }
 };
 
+function undoColorFill() {
+    const target = USER_INPUT.targets;
+    const color = USER_INPUT.previousColor;
+    if (target.length === 0) { return }
+    target[target.length - 1].style.backgroundColor = color[color.length - 1];
+    target.pop();
+    color.pop();
+}
+
 // EVENT LISTENERS
+
+const undoBtn = document.querySelector("#undo");
+undoBtn.addEventListener("click", undoColorFill);
 
 pad.addEventListener("mousedown", (e) => {
     e.preventDefault();
+
     draw(e);
     document.addEventListener("mouseover", draw);
     document.addEventListener("mouseup", () => {
@@ -192,6 +224,7 @@ toolsBtns.forEach(button => {
             btn.classList.remove("selected", "rainbow")
         }
         button.classList.add("selected");
+        USER_INPUT.selected = button.textContent;
     });
 })
 
@@ -223,3 +256,22 @@ mainColor.addEventListener("input", () => {
 })
 
 
+// const newArr = [];
+// newArr.splice(0, newArr.length);
+    // USER_INPUT.targets.push({...pad.children});
+    // const newObj = [...USER_INPUT.targets];
+    // for(let prop in newObj[0]) {
+    //   newObj[0].prop = newObj[0][prop].style.backgroundColor;
+    // }
+    // USER_INPUT.previousColor.push(newObj)
+    // newArr.forEach(item => {
+    //   for (let i = 0; i < pad.children.length; i++) {
+    //   USER_INPUT.previousColor.push(item[i].style.backgroundColor);
+    // }
+    // });
+  //   USER_INPUT.targets.forEach(target => {
+  //     for (let i = 0; i < pad.children.length; i++) {
+  //       newArr.push(target[i].style.backgroundColor)
+  //     }
+  //   })
+  // USER_INPUT.previousColor.push(newArr);
