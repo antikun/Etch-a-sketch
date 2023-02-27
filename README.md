@@ -25,7 +25,7 @@ Apply everything I've learned so far to make a fully functional and responsive p
 
 #### Screenshots
 
-<img src="/screenshots/mario-pixel-grid.png" width="auto" height="350px"><img src="/screenshots/mario-mobile.png" width="auto%" height="350px">
+<img src="/screenshots/mario-pixel-grid.png" width="auto" height="350px">  <img src="/screenshots/mario-mobile.png" width="auto%" height="350px">
 
 * Learned how to set up click and drag (mousedown & mouseover) event listeners.
 * Got more practice using array methods and generally implementing object literals and arrays in my code.
