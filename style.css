@@ -88,7 +88,7 @@ body {
     width: 48px;
     height: 48px;
     box-sizing: border-box;
-    border: 2px ridge #74c69d;
+    border: 2px solid #74c69d;
     border-radius: 50%;
     cursor: pointer;
     background-color: black;

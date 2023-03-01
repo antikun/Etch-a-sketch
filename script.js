@@ -1,93 +1,34 @@
-// I got the makeRipple function from https://css-tricks.com/how-to-recreate-the-ripple-effect-of-material-design-buttons/ 
-
-function makeRipple(e) {
-    const button = e.currentTarget;
-    const circle = document.createElement("span");
-    const diameter = Math.max(button.clientWidth, button.clientHeight);
-    const radius = diameter / 2;
-
-    circle.style.width = circle.style.height = `${diameter}px`;
-    circle.style.left = `${e.clientX - (button.offsetLeft + radius)}px`;
-    circle.style.top = `${e.clientY - (button.offsetTop + radius)}px`;
-    circle.classList.add("ripple");
-
-    const ripple = button.getElementsByClassName("ripple")[0];
-    if (ripple) {
-        ripple.remove();
-    }
-    button.appendChild(circle);
-}
-
-const buttons = document.querySelectorAll(".opt-btns");
-buttons.forEach(button => {
-    button.addEventListener("click", makeRipple)
-});
-
-// GLOBAL VARIABLES
-
-const mainColor = document.querySelector("#main-color");
-const pen = document.querySelector("#pen");
-const slider = document.querySelector("#grid-slider");
-const pad = document.querySelector(".pad");
-const eraser = document.querySelector("#eraser");
-const bgColorBtn = document.querySelector("#bg-color-btn");
-const rainbowBtn = document.querySelector("#rainbow");
-const shaderBtn = document.querySelector("#shader");
-const ligthenerBtn = document.querySelector("#lightener");
-const fillBtn = document.querySelector("#bucket");
-const grabberBtn = document.querySelector("#grabber");
-
 const USER_INPUT = {
     selected: "Pen",
-    color: "",
+    color: document.querySelector("#main-color"),
+    slider: document.querySelector("#grid-slider"),
+    grid: document.querySelectorAll(".slider-value"),
+    pad: document.querySelector(".pad"),
     targets: [],
-    previousColor: []
+    previousColor: [],
+    clicks: 0
 };
 
-
-// SETTING THE GRID FUNCTIONS
-
-function makeDivs(num) {
-    while (pad.firstChild) {
-        pad.removeChild(pad.firstChild);
+function makeDivs() { //sets the grid
+    while (USER_INPUT.pad.firstChild) { //removes all child nodes before appending new divs
+        USER_INPUT.pad.removeChild(USER_INPUT.pad.firstChild);
     }
 
-    const outputValue = document.querySelectorAll(".slider-value");
-    outputValue.forEach(output => output.textContent = num);
+    const num = USER_INPUT.slider.value;
+
+    USER_INPUT.grid.forEach(output => output.textContent = num);
 
     const gridNum = num ** 2;
     for (let i = 0; i < gridNum; i++) {
         const div = document.createElement("div");
-        div.style.width = div.style.height = `${((pad.clientWidth) / num)}px`;
+        div.style.width = div.style.height = `${((USER_INPUT.pad.clientWidth) / num)}px`;
         div.classList.add("grid-cell", "cell-border");
-        pad.append(div);
+        USER_INPUT.pad.append(div);
     }
 }
 
-makeDivs(slider.value); // sets initial grid
-
-window.addEventListener("resize", () => { // makes the grid responsive
-    pad.childNodes.forEach(div => {
-        const newDivWidth = `${pad.clientWidth / slider.value}px`;
-        div.style.width = div.style.height = newDivWidth;
-    });
-});
-
-slider.addEventListener("change", () => {
-    makeDivs(slider.value);
-});
 
 // COLORING FUNCTIONS
-
-let clicks = 0;
-
-function getRainbowColor() {
-    const rainbowColors = ["rgb(255, 0, 0)", "rgb(255,165,0)", "rgb(255,255,0)", "rgb(0, 255, 0)", "rgb(0,0,255)", "rgb(75,0,130)"];
-    if (clicks > rainbowColors.length) {
-        clicks = 1
-    }
-    return rainbowColors[clicks - 1]
-}
 
 // function makeRandomColor() {
 //     const getRandomNum = () => {
@@ -165,18 +106,27 @@ function prepareUndo(e) {
     USER_INPUT.previousColor.push(e.target.style.backgroundColor);
 }
 
-const draw = (e) => {
+function draw(e) {
     e.preventDefault();
     prepareUndo(e);
-    if (pad.contains(e.target) && e.target != pad) {
+
+    function getRainbowColor() {
+        const rainbowColors = ["rgb(255, 0, 0)", "rgb(255,165,0)", "rgb(255,255,0)", "rgb(0, 255, 0)", "rgb(0,0,255)", "rgb(75,0,130)"];
+        if (USER_INPUT.clicks > rainbowColors.length) {
+            USER_INPUT.clicks = 1
+        }
+        return rainbowColors[USER_INPUT.clicks - 1]
+    }
+
+    if (USER_INPUT.pad.contains(e.target) && e.target != USER_INPUT.pad) {
         if (USER_INPUT.selected === "Pen") {
-            e.target.style.backgroundColor = mainColor.value;
+            e.target.style.backgroundColor = USER_INPUT.color.value;
         } else if (USER_INPUT.selected === "Eraser") {
             e.target.style.backgroundColor = "transparent";
         } else if (USER_INPUT.selected === "Background") {
-            pad.style.backgroundColor = mainColor.value;
+            USER_INPUT.pad.style.backgroundColor = USER_INPUT.color.value;
         } else if (USER_INPUT.selected === "Unicorn") {
-            clicks++;
+            USER_INPUT.clicks++;
             e.target.style.backgroundColor = getRainbowColor();
         } else if (USER_INPUT.selected === "Shader") {
             const currentColor = e.target.style.backgroundColor;
@@ -187,8 +137,8 @@ const draw = (e) => {
         } else if (USER_INPUT.selected === "Color Grab") {
             if (e.target.style.backgroundColor === "") { return }
             const targetColor = convertRGBtoHEX(e.target.style.backgroundColor)
-            mainColor.value = targetColor;
-            mainColor.style.backgroundColor = targetColor;
+            USER_INPUT.color.value = targetColor;
+            USER_INPUT.color.style.backgroundColor = targetColor;
         }
     }
 };
@@ -202,58 +152,93 @@ function undoColorFill() {
     color.pop();
 }
 
-// EVENT LISTENERS
-
-const undoBtn = document.querySelector("#undo");
-undoBtn.addEventListener("click", undoColorFill);
-
-pad.addEventListener("mousedown", (e) => {
-    e.preventDefault();
-
-    draw(e);
-    document.addEventListener("mouseover", draw);
-    document.addEventListener("mouseup", () => {
-        document.removeEventListener("mouseover", draw);
-    });
-});
-
-const toolsBtns = document.querySelectorAll(".tools-btns");
-toolsBtns.forEach(button => {
-    button.addEventListener("click", () => {
-        for (let btn of toolsBtns) {
-            btn.classList.remove("selected", "rainbow")
-        }
-        button.classList.add("selected");
-        USER_INPUT.selected = button.textContent;
-    });
-});
-
-rainbowBtn.addEventListener("click", () => {
-    rainbowBtn.classList.add("rainbow");
-});
-
-// GOLD BUTTONS
-
 function toggleGrid() {
-    pad.childNodes.forEach(div => {
+    USER_INPUT.pad.childNodes.forEach(div => {
         div.classList.toggle("cell-border");
     })
 }
 
-const gridBtn = document.querySelector("#toggle-grid");
-gridBtn.addEventListener("click", toggleGrid);
+function makeRipple(e) { // I got the makeRipple function from https://css-tricks.com/how-to-recreate-the-ripple-effect-of-material-design-buttons/ 
+    const button = e.currentTarget;
+    const circle = document.createElement("span");
+    const diameter = Math.max(button.clientWidth, button.clientHeight);
+    const radius = diameter / 2;
 
-const clearBtn = document.querySelector("#clear");
-clearBtn.addEventListener("click", () => {
-    pad.childNodes.forEach(div => {
-        div.style.backgroundColor = "";
+    circle.style.width = circle.style.height = `${diameter}px`;
+    circle.style.left = `${e.clientX - (button.offsetLeft + radius)}px`;
+    circle.style.top = `${e.clientY - (button.offsetTop + radius)}px`;
+    circle.classList.add("ripple");
+
+    const ripple = button.getElementsByClassName("ripple")[0];
+    if (ripple) {
+        ripple.remove();
+    }
+    button.appendChild(circle);
+}
+
+function setEventListeners() {
+    USER_INPUT.slider.addEventListener("change", makeDivs);
+    USER_INPUT.slider.addEventListener("input", () => {
+        USER_INPUT.grid.forEach(output => output.textContent = USER_INPUT.slider.value)
     });
-    USER_INPUT.targets.splice(0, USER_INPUT.targets.length);
-    USER_INPUT.previousColor.splice(0, USER_INPUT.previousColor.length);
-});
 
-// COLOR SWATCH BACKGROUND
+    window.addEventListener("resize", () => { // makes the grid responsive
+        USER_INPUT.pad.childNodes.forEach(div => {
+            const newDivWidth = `${USER_INPUT.pad.clientWidth / USER_INPUT.slider.value}px`;
+            div.style.width = div.style.height = newDivWidth;
+        });
+    });
 
-mainColor.addEventListener("input", () => {
-    mainColor.style.backgroundColor = mainColor.value;
-});
+    const toolsBtns = document.querySelectorAll(".tools-btns");
+    toolsBtns.forEach(button => {
+        button.addEventListener("click", () => {
+            for (let btn of toolsBtns) {
+                btn.classList.remove("selected", "rainbow")
+            }
+            button.classList.add("selected");
+            USER_INPUT.selected = button.textContent;
+        });
+    });
+
+    document.querySelectorAll(".opt-btns").forEach(button => {
+        button.addEventListener("click", makeRipple)
+    });
+
+    USER_INPUT.pad.addEventListener("mousedown", (e) => {
+        e.preventDefault();
+
+        draw(e);
+        document.addEventListener("mouseover", draw);
+        document.addEventListener("mouseup", () => {
+            document.removeEventListener("mouseover", draw);
+        });
+    });
+
+    const rainbowBtn = document.querySelector("#rainbow");
+    rainbowBtn.addEventListener("click", () => {
+        rainbowBtn.classList.add("rainbow");
+    });
+
+    document.querySelector("#undo").addEventListener("click", undoColorFill);
+
+    USER_INPUT.color.addEventListener("input", () => {
+        USER_INPUT.color.style.backgroundColor = USER_INPUT.color.value;
+    });
+
+    document.querySelector("#toggle-grid").addEventListener("click", toggleGrid);
+
+    document.querySelector("#clear").addEventListener("click", () => {
+        USER_INPUT.pad.childNodes.forEach(div => {
+            div.style.backgroundColor = "";
+        });
+        USER_INPUT.targets.splice(0, USER_INPUT.targets.length);
+        USER_INPUT.previousColor.splice(0, USER_INPUT.previousColor.length);
+    });
+}
+
+function main() {
+    makeDivs();
+    setEventListeners();
+}
+
+main();
