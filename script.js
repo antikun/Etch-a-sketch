@@ -1,4 +1,4 @@
-const USER_INPUT = {
+const userInput = {
     selected: "Pen",
     color: document.querySelector("#main-color"),
     slider: document.querySelector("#grid-slider"),
@@ -10,20 +10,20 @@ const USER_INPUT = {
 };
 
 function makeDivs() { //sets the grid
-    while (USER_INPUT.pad.firstChild) { //removes all child nodes before appending new divs
-        USER_INPUT.pad.removeChild(USER_INPUT.pad.firstChild);
+    while (userInput.pad.firstChild) { //removes all child nodes before appending new divs
+        userInput.pad.removeChild(userInput.pad.firstChild);
     }
 
-    const num = USER_INPUT.slider.value;
+    const num = userInput.slider.value;
 
-    USER_INPUT.grid.forEach(output => output.textContent = num);
+    userInput.grid.forEach(output => output.textContent = num);
 
     const gridNum = num ** 2;
     for (let i = 0; i < gridNum; i++) {
         const div = document.createElement("div");
-        div.style.width = div.style.height = `${((USER_INPUT.pad.clientWidth) / num)}px`;
+        div.style.width = div.style.height = `${((userInput.pad.clientWidth) / num)}px`;
         div.classList.add("grid-cell", "cell-border");
-        USER_INPUT.pad.append(div);
+        userInput.pad.append(div);
     }
 }
 
@@ -96,14 +96,14 @@ function convertRGBtoHEX(input) {
 
 
 function prepareUndo(e) {
-    if (USER_INPUT.targets.length > 100) {
-        USER_INPUT.targets.splice(0, 50)
+    if (userInput.targets.length > 100) {
+        userInput.targets.splice(0, 50)
     }
-    if (USER_INPUT.previousColor.length > 100) {
-        USER_INPUT.previousColor.splice(0, 50)
+    if (userInput.previousColor.length > 100) {
+        userInput.previousColor.splice(0, 50)
     }
-    USER_INPUT.targets.push(e.target);
-    USER_INPUT.previousColor.push(e.target.style.backgroundColor);
+    userInput.targets.push(e.target);
+    userInput.previousColor.push(e.target.style.backgroundColor);
 }
 
 function draw(e) {
@@ -112,40 +112,40 @@ function draw(e) {
 
     function getRainbowColor() {
         const rainbowColors = ["rgb(255, 0, 0)", "rgb(255,165,0)", "rgb(255,255,0)", "rgb(0, 255, 0)", "rgb(0,0,255)", "rgb(75,0,130)"];
-        if (USER_INPUT.clicks > rainbowColors.length) {
-            USER_INPUT.clicks = 1
+        if (userInput.clicks > rainbowColors.length) {
+            userInput.clicks = 1
         }
-        return rainbowColors[USER_INPUT.clicks - 1]
+        return rainbowColors[userInput.clicks - 1]
     }
 
-    if (USER_INPUT.pad.contains(e.target) && e.target != USER_INPUT.pad) {
-        if (USER_INPUT.selected === "Pen") {
-            e.target.style.backgroundColor = USER_INPUT.color.value;
-        } else if (USER_INPUT.selected === "Eraser") {
+    if (userInput.pad.contains(e.target) && e.target != userInput.pad) {
+        if (userInput.selected === "Pen") {
+            e.target.style.backgroundColor = userInput.color.value;
+        } else if (userInput.selected === "Eraser") {
             e.target.style.backgroundColor = "transparent";
-        } else if (USER_INPUT.selected === "Background") {
-            USER_INPUT.pad.style.backgroundColor = USER_INPUT.color.value;
-        } else if (USER_INPUT.selected === "Unicorn") {
-            USER_INPUT.clicks++;
+        } else if (userInput.selected === "Background") {
+            userInput.pad.style.backgroundColor = userInput.color.value;
+        } else if (userInput.selected === "Unicorn") {
+            userInput.clicks++;
             e.target.style.backgroundColor = getRainbowColor();
-        } else if (USER_INPUT.selected === "Shader") {
+        } else if (userInput.selected === "Shader") {
             const currentColor = e.target.style.backgroundColor;
             e.target.style.backgroundColor = applyShader(currentColor);
-        } else if (USER_INPUT.selected === "Lightener") {
+        } else if (userInput.selected === "Lightener") {
             const currentColor = e.target.style.backgroundColor;
             e.target.style.backgroundColor = applyLightener(currentColor);
-        } else if (USER_INPUT.selected === "Color Grab") {
+        } else if (userInput.selected === "Color Grab") {
             if (e.target.style.backgroundColor === "") { return }
             const targetColor = convertRGBtoHEX(e.target.style.backgroundColor)
-            USER_INPUT.color.value = targetColor;
-            USER_INPUT.color.style.backgroundColor = targetColor;
+            userInput.color.value = targetColor;
+            userInput.color.style.backgroundColor = targetColor;
         }
     }
 };
 
 function undoColorFill() {
-    const target = USER_INPUT.targets;
-    const color = USER_INPUT.previousColor;
+    const target = userInput.targets;
+    const color = userInput.previousColor;
     if (target.length === 0) { return }
     target[target.length - 1].style.backgroundColor = color[color.length - 1];
     target.pop();
@@ -153,7 +153,7 @@ function undoColorFill() {
 }
 
 function toggleGrid() {
-    USER_INPUT.pad.childNodes.forEach(div => {
+    userInput.pad.childNodes.forEach(div => {
         div.classList.toggle("cell-border");
     })
 }
@@ -177,14 +177,14 @@ function makeRipple(e) { // I got the makeRipple function from https://css-trick
 }
 
 function setEventListeners() {
-    USER_INPUT.slider.addEventListener("change", makeDivs);
-    USER_INPUT.slider.addEventListener("input", () => {
-        USER_INPUT.grid.forEach(output => output.textContent = USER_INPUT.slider.value)
+    userInput.slider.addEventListener("change", makeDivs);
+    userInput.slider.addEventListener("input", () => {
+        userInput.grid.forEach(output => output.textContent = userInput.slider.value)
     });
 
     window.addEventListener("resize", () => { // makes the grid responsive
-        USER_INPUT.pad.childNodes.forEach(div => {
-            const newDivWidth = `${USER_INPUT.pad.clientWidth / USER_INPUT.slider.value}px`;
+        userInput.pad.childNodes.forEach(div => {
+            const newDivWidth = `${userInput.pad.clientWidth / userInput.slider.value}px`;
             div.style.width = div.style.height = newDivWidth;
         });
     });
@@ -196,7 +196,7 @@ function setEventListeners() {
                 btn.classList.remove("selected", "rainbow")
             }
             button.classList.add("selected");
-            USER_INPUT.selected = button.textContent;
+            userInput.selected = button.textContent;
         });
     });
 
@@ -204,7 +204,7 @@ function setEventListeners() {
         button.addEventListener("click", makeRipple)
     });
 
-    USER_INPUT.pad.addEventListener("mousedown", (e) => {
+    userInput.pad.addEventListener("mousedown", (e) => {
         e.preventDefault();
 
         draw(e);
@@ -221,18 +221,18 @@ function setEventListeners() {
 
     document.querySelector("#undo").addEventListener("click", undoColorFill);
 
-    USER_INPUT.color.addEventListener("input", () => {
-        USER_INPUT.color.style.backgroundColor = USER_INPUT.color.value;
+    userInput.color.addEventListener("input", () => {
+        userInput.color.style.backgroundColor = userInput.color.value;
     });
 
     document.querySelector("#toggle-grid").addEventListener("click", toggleGrid);
 
     document.querySelector("#clear").addEventListener("click", () => {
-        USER_INPUT.pad.childNodes.forEach(div => {
+        userInput.pad.childNodes.forEach(div => {
             div.style.backgroundColor = "";
         });
-        USER_INPUT.targets.splice(0, USER_INPUT.targets.length);
-        USER_INPUT.previousColor.splice(0, USER_INPUT.previousColor.length);
+        userInput.targets.splice(0, userInput.targets.length);
+        userInput.previousColor.splice(0, userInput.previousColor.length);
     });
 }
 
