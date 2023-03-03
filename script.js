@@ -14,6 +14,10 @@ function makeDivs() { //sets the grid
         userInput.pad.removeChild(userInput.pad.firstChild);
     }
 
+    if (window.innerWidth > 1024) {
+        userInput.slider.max = 64;
+    }
+
     const num = userInput.slider.value;
 
     userInput.grid.forEach(output => output.textContent = num);
@@ -183,6 +187,11 @@ function setEventListeners() {
     });
 
     window.addEventListener("resize", () => { // makes the grid responsive
+        if (window.innerWidth < 1024) {
+            userInput.slider.max = 40;
+        } else {
+            userInput.slider.max = 64;
+        }
         userInput.pad.childNodes.forEach(div => {
             const newDivWidth = `${userInput.pad.clientWidth / userInput.slider.value}px`;
             div.style.width = div.style.height = newDivWidth;

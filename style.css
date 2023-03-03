@@ -216,6 +216,13 @@ span.ripple {
     display: none;
 }
 
+@media (min-width: 400px) {
+    .pad {
+        width: 360px;
+        height: 360px;
+    }
+}
+
 @media (min-width:768px) {
     .title {
         margin-top: 20px;
