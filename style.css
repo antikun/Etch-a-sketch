@@ -44,8 +44,6 @@ body {
     height: 340px;
     background-color: #f8f9fa;
     border: 5px solid #6d597a;
-    display: flex;
-    flex-wrap: wrap;
 }
 
 .pad>.grid-cell {

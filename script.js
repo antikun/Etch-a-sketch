@@ -14,10 +14,6 @@ function makeDivs() { //sets the grid
         userInput.pad.removeChild(userInput.pad.firstChild);
     }
 
-    if (window.innerWidth > 1024) {
-        userInput.slider.max = 64;
-    }
-
     const num = userInput.slider.value;
 
     userInput.grid.forEach(output => output.textContent = num);
@@ -25,10 +21,11 @@ function makeDivs() { //sets the grid
     const gridNum = num ** 2;
     for (let i = 0; i < gridNum; i++) {
         const div = document.createElement("div");
-        div.style.width = div.style.height = `${((userInput.pad.clientWidth) / num)}px`;
         div.classList.add("grid-cell", "cell-border");
         userInput.pad.append(div);
     }
+    userInput.pad.style.display = "grid";
+    userInput.pad.style.gridTemplate = `repeat(${num}, 1fr) / repeat(${num}, 1fr)`;
 }
 
 
@@ -184,18 +181,6 @@ function setEventListeners() {
     userInput.slider.addEventListener("change", makeDivs);
     userInput.slider.addEventListener("input", () => {
         userInput.grid.forEach(output => output.textContent = userInput.slider.value)
-    });
-
-    window.addEventListener("resize", () => { // makes the grid responsive
-        if (window.innerWidth < 1024) {
-            userInput.slider.max = 40;
-        } else {
-            userInput.slider.max = 64;
-        }
-        userInput.pad.childNodes.forEach(div => {
-            const newDivWidth = `${userInput.pad.clientWidth / userInput.slider.value}px`;
-            div.style.width = div.style.height = newDivWidth;
-        });
     });
 
     const toolsBtns = document.querySelectorAll(".tools-btns");
